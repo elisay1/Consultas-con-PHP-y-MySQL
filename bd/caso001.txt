@@ -1,0 +1,159 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 26-04-2024 a las 09:24:51
+-- Versión del servidor: 10.4.28-MariaDB
+-- Versión de PHP: 8.2.4
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de datos: `caso001`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `cargo`
+--
+
+CREATE TABLE `cargo` (
+  `codcargo` int(11) NOT NULL,
+  `descri` char(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `cargo`
+--
+
+INSERT INTO `cargo` (`codcargo`, `descri`) VALUES
+(1, 'CAJERO'),
+(2, 'VENDEDOR'),
+(3, 'AUXILIAR CONTABLE'),
+(4, 'ALMACENERO');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `empleado`
+--
+
+CREATE TABLE `empleado` (
+  `id` int(11) NOT NULL,
+  `nombres` char(35) NOT NULL,
+  `apepaterno` char(30) NOT NULL,
+  `apematerno` char(30) NOT NULL,
+  `codpro` int(11) DEFAULT NULL,
+  `codcargo` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `empleado`
+--
+
+INSERT INTO `empleado` (`id`, `nombres`, `apepaterno`, `apematerno`, `codpro`, `codcargo`) VALUES
+(1, 'YOSIP', 'URQUIZO', 'GOMEZ', 4, 2),
+(2, 'ENRIQUE', 'MARCOS', 'VASQUEZ', 2, 1),
+(3, 'MARIA', 'RUIZ', 'DIAZ', 1, 1),
+(4, 'JUAN', 'ARIAS', 'VALVERDE', 1, 1),
+(5, 'LUIS', 'MIRANDA', 'PARDO', 1, 2),
+(6, 'LULU', 'QUEBEDO', 'CHAVEZ', 2, 3),
+(7, 'ANDREA', 'ALVAREZ', 'PRIETO', 2, 3),
+(8, 'ANA', 'RIVAS', 'TELLO', 3, 2),
+(9, 'EVITA', 'PERON', 'ARIAS', 4, 2),
+(10, 'MIGUEL', 'CERVANTES', 'SAAVEDRA', 4, 2),
+(11, 'CALUDIA', 'ROJAS', 'AVILA', 3, 1),
+(12, 'RITA', 'ARIAS', 'ALVARES', 4, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `profesion`
+--
+
+CREATE TABLE `profesion` (
+  `codpro` int(11) NOT NULL,
+  `profesion` char(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `profesion`
+--
+
+INSERT INTO `profesion` (`codpro`, `profesion`) VALUES
+(1, 'SECUNDARIA COMPLETA'),
+(2, 'CONTADOR'),
+(3, 'SECRETARIA'),
+(4, 'MARKETING');
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `cargo`
+--
+ALTER TABLE `cargo`
+  ADD PRIMARY KEY (`codcargo`);
+
+--
+-- Indices de la tabla `empleado`
+--
+ALTER TABLE `empleado`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `codpro` (`codpro`),
+  ADD KEY `codcargo` (`codcargo`);
+
+--
+-- Indices de la tabla `profesion`
+--
+ALTER TABLE `profesion`
+  ADD PRIMARY KEY (`codpro`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `cargo`
+--
+ALTER TABLE `cargo`
+  MODIFY `codcargo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8494;
+
+--
+-- AUTO_INCREMENT de la tabla `empleado`
+--
+ALTER TABLE `empleado`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT de la tabla `profesion`
+--
+ALTER TABLE `profesion`
+  MODIFY `codpro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `empleado`
+--
+ALTER TABLE `empleado`
+  ADD CONSTRAINT `empleado_ibfk_1` FOREIGN KEY (`codpro`) REFERENCES `profesion` (`codpro`),
+  ADD CONSTRAINT `empleado_ibfk_2` FOREIGN KEY (`codcargo`) REFERENCES `cargo` (`codcargo`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
